@@ -1,0 +1,58 @@
+ty32@pc38:~/TYBCS-32/WT/Assignment No-5$ psql -h 192.168.1.254 ty32
+Password for user ty32: 
+psql (13.8 (Debian 13.8-0+deb11u1))
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+ty32=> create table event(eno int primary key,title text,data varchar(20));
+CREATE TABLE
+ty32=> create table committee(cno int primary key,name text not null,head text,ftime varchar(20),ttime varchar(20),tstatus text);
+CREATE TABLE
+ty32=> create table ec(eno int references event(eno),cno int references committee(cno));
+CREATE TABLE
+
+ty32=> insert into event(eno,title,data) values(1,'genesis','2/1/2024');
+INSERT 0 1
+ty32=> insert into event(eno,title,data) values(2,'sports','12/1/2024');
+INSERT 0 1
+ty32=> insert into event(eno,title,data) values(3,'Annual','22/1/2024');
+INSERT 0 1
+ty32=> select *from event;
+ eno |  title  |   data    
+-----+---------+-----------
+   1 | genesis | 2/1/2024
+   2 | sports  | 12/1/2024
+   3 | Annual  | 22/1/2024
+(3 rows)
+
+ty32=> insert into committee(cno,name,head,ftime,ttime,tstatus) values(4,'tcs','hod',9,10,'not working');
+INSERT 0 1
+ty32=> insert into committee(cno,name,head,ftime,ttime,tstatus) values(5,'google','patil',9,10,'working');
+INSERT 0 1
+ty32=> insert into committee(cno,name,head,ftime,ttime,tstatus) values(6,'airelines','singh',9,10,'working');
+INSERT 0 1
+ty32=> select *from committee;
+ cno |   name    | head  | ftime | ttime |   tstatus   
+-----+-----------+-------+-------+-------+-------------
+   4 | tcs       | hod   | 9     | 10    | not working
+   5 | google    | patil | 9     | 10    | working
+   6 | airelines | singh | 9     | 10    | working
+(3 rows)
+
+ty32=> insert into ec(eno,cno) values(1,6);
+INSERT 0 1
+ty32=> insert into ec(eno,cno) values(2,5);
+INSERT 0 1
+ty32=> insert into ec(eno,cno) values(3,4);
+INSERT 0 1
+ty32=> select *from ec;
+ eno | cno 
+-----+-----
+   1 |   6
+   2 |   5
+   3 |   4
+(3 rows)
+
+ty32=> 
+
+
